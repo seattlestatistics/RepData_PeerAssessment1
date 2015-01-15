@@ -79,7 +79,7 @@ plot(agg2$steps,cex=0.2,col="blue",type="l",xlab="Time index",ylab="Steps taken"
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
-It is also necessary to find the interval with the maximum number of steps.
+It is also necessary to find the interval which, on average, had the maximum number of steps.
 
 
 ```r
