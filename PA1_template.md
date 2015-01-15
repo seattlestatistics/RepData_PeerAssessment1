@@ -3,7 +3,9 @@ title: "Measuring steps"
 output: html_document
 ---
 
-### Getting the data
+### Getting and processing the data
+
+The read.csv() function was used to read the downloaded data file.  
 
 
 ```r
@@ -63,6 +65,9 @@ aggmean <- mean(agg$steps);aggmed <- median(agg$steps)
 ```
 The mean number of steps taken per day is 37.3826 and the median number of steps taken per day is 37.3785.
 
+
+
+
 ### The average daily activity pattern
 
 The aggregate() function will be used again, to see which intervals, across all days, have the most activity.  In the first instance a time series chart will be created.
@@ -73,6 +78,21 @@ plot(agg2$steps,cex=0.2,col="blue",type="l",xlab="Time index",ylab="Steps taken"
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+
+It is also necessary to find the interval with the maximum number of steps.
+
+
+```r
+mx <- max(agg2$steps)
+mxsteps <- subset(agg2,steps >= mx)
+mxsteps
+```
+
+```
+##     interval steps
+## 104      835 206.2
+```
+We can then see that the interval with the maximum number of steps is interval number 835.
 
 ### Inputting missing values
 
@@ -102,7 +122,7 @@ agg <- aggregate(steps ~ date,mean,data=steps)
 hist(agg$steps,col="lightgreen",xlab="Mean steps per day", xlim=c(0,80),main="Histogram of mean steps per day, NAs converted to interval means",breaks=12)
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
 
 ```r
 aggmean <- mean(agg$steps);aggmed <- median(agg$steps)
@@ -172,14 +192,7 @@ A Graph was created, comparing the mean distribution of steps on weekdays and we
 
 ```r
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.1.2
-```
-
-```r
 ggplot(stepsfinal,aes(x=interval,y=steps,colour=weekday)) + geom_line() + facet_grid(weekday ~ .) + labs(y="Steps",x="Interval") + ggtitle("Comparison of steps taken on weekdays and on weekends")
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 

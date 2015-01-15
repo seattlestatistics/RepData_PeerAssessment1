@@ -3,7 +3,9 @@ title: "Measuring steps"
 output: html_document
 ---
 
-### Getting the data
+### Getting and processing the data
+
+The read.csv() function was used to read the downloaded data file.  
 
 ```{r}
 steps <- read.csv("c:/activity.csv")
@@ -28,6 +30,9 @@ aggmean <- mean(agg$steps);aggmed <- median(agg$steps)
 ```
 The mean number of steps taken per day is `r round(aggmean,4)` and the median number of steps taken per day is `r round(aggmed,4)`.
 
+
+
+
 ### The average daily activity pattern
 
 The aggregate() function will be used again, to see which intervals, across all days, have the most activity.  In the first instance a time series chart will be created.
@@ -36,6 +41,15 @@ agg2 <- aggregate(steps ~ interval,mean,data=steps1)
 plot(agg2$steps,cex=0.2,col="blue",type="l",xlab="Time index",ylab="Steps taken",main="Time series of mean steps taken over the course of a day")
 
 ```
+
+It is also necessary to find the interval with the maximum number of steps.
+
+```{r}
+mx <- max(agg2$steps)
+mxsteps <- subset(agg2,steps >= mx)
+mxsteps
+```
+We can then see that the interval with the maximum number of steps is interval number `r mxsteps[1,1]`.
 
 ### Inputting missing values
 
